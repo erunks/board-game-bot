@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "forceConsistentCasingInFileNames": true,
+    "importHelpers": true,
+    "lib": [
+      "es2021",
+      "esnext.asynciterable"
+    ],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noImplicitAny": false,
+    "outDir": "./build",
+    "sourceMap": true,
+    "target": "es2021",
+  },
+  "exclude": ["node_modules"],
+  "include": ["src"],
+  "indent": [
+    true,
+    "spaces",
+    2
+  ]
+}

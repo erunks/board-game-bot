@@ -1,0 +1,29 @@
+{
+  "env" : {
+    "es2021": true,
+    "jest": true,
+    "jest/globals": true
+  },
+  "extends": [
+    "airbnb",
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:import/recommended",
+    "prettier"
+  ],
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint", "jest", "import", "prettier"],
+  "rules": {
+    "consistent-return": 0,
+    "no-console": ["error", { "allow": ["error","warn"] }]
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "paths": ["./src"]
+      }
+    }
+  }
+}
