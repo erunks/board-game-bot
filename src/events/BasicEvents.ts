@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import { Discord, Description, On, ArgsOf } from '@typeit/discord';
 
-@Discord('/')
+@Discord()
 @Description('Basic Events')
 export abstract class BasicEvents {
   @On('ready')

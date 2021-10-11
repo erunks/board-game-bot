@@ -1,44 +1,40 @@
 import {
   Discord,
-  Client,
-  CommandMessage,
-  Command,
   Description,
-  Guard,
+  Slash
 } from '@typeit/discord';
-import get from 'lodash/get';
-import join from 'lodash/join';
-import map from 'lodash/map';
-import sortBy from 'lodash/sortBy';
-import { NotBot } from '../guards';
+import { CommandInteraction } from 'discord.js';
+// import get from 'lodash/get';
+// import join from 'lodash/join';
+// import map from 'lodash/map';
+// import sortBy from 'lodash/sortBy';
 
-@Discord('/')
+@Discord()
 @Description('Basic Commands list')
 export abstract class BasicCommands {
-  @Command('ping')
+  @Slash('ping')
   @Description('Responds with `pong!`')
-  @Guard(NotBot)
-  ping(command: CommandMessage): void {
-    command.reply('pong!');
+  ping(interaction: CommandInteraction): void {
+    interaction.reply('pong!');
   }
 
-  @Command('commands')
-  @Description('Get the available list of commands')
-  commands(command: CommandMessage): void {
-    const commandList = map(
-      sortBy(Client.getCommands(), (o) => o.commandName),
-      (command) => {
-        const name = get(command, 'commandName');
-        const description = get(command, 'description', 'No description available.');
+  // @Slash('commands')
+  // @Description('Get the available list of commands')
+  // commands(command: CommandMessage): void {
+  //   const commandList = map(
+  //     sortBy(Client.getCommands(), (o) => o.commandName),
+  //     (command) => {
+  //       const name = get(command, 'commandName');
+  //       const description = get(command, 'description', 'No description available.');
 
-        return `> ${name} - ${description}`;
-      }
-    );
+  //       return `> ${name} - ${description}`;
+  //     }
+  //   );
 
-    command.reply(
-      "Here is a list of commands:\n" + join(commandList, '\n')
-    );
-  }
+  //   command.reply(
+  //     "Here is a list of commands:\n" + join(commandList, '\n')
+  //   );
+  // }
 }
 
 export default BasicCommands;

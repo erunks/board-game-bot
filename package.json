@@ -7,7 +7,7 @@
   "scripts": {
     "build": "tsc",
     "coverage": "open ./coverage/lcov-report/index.html",
-    "dev": "ts-node src/Main.ts",
+    "dev": "ts-node -r dotenv/config src/Main.ts",
     "git:update": "git add -u",
     "lint:all": "eslint ./src",
     "lint:fix": "eslint ./src --fix",
@@ -23,13 +23,14 @@
     "test:watch": "jest --watch"
   },
   "dependencies": {
-    "@typeit/discord": "^4.0.10",
+    "@typeit/discord": "^5.0.13",
     "@types/google-spreadsheet": "^3.1.5",
     "@types/lodash": "^4.14.175",
     "discord.js": "^13.2.0",
     "dotenv": "^10.0.0",
     "google-spreadsheet": "^3.1.15",
     "lodash": "^4.17.21",
+    "reflect-metadata": "^0.1.13",
     "ts-node": "^10.2.1",
     "tslib": "^2.3.1",
     "typescript": "^4.4.3"
