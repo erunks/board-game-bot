@@ -1,6 +1,6 @@
-import { GuardFunction } from "@typeit/discord";
+import { GuardFunction } from '@typeit/discord';
 
-export const NotBot: GuardFunction<"message"> = async (
+export const NotBot: GuardFunction<'message'> = async (
   [message],
   client,
   next
@@ -9,3 +9,5 @@ export const NotBot: GuardFunction<"message"> = async (
     await next();
   }
 };
+
+export default NotBot;
