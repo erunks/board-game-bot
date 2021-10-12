@@ -1,8 +1,4 @@
-import {
-  Discord,
-  Description,
-  Slash
-} from '@typeit/discord';
+import { Discord, Slash } from 'discordx';
 import { CommandInteraction } from 'discord.js';
 // import get from 'lodash/get';
 // import join from 'lodash/join';
@@ -10,12 +6,10 @@ import { CommandInteraction } from 'discord.js';
 // import sortBy from 'lodash/sortBy';
 
 @Discord()
-@Description('Basic Commands list')
-export abstract class BasicCommands {
-  @Slash('ping')
-  @Description('Responds with `pong!`')
-  ping(interaction: CommandInteraction): void {
-    interaction.reply('pong!');
+export abstract class Base {
+  @Slash('ping', { description: 'Ping the bot. Responds with `pong!`' })
+  async ping(interaction: CommandInteraction): Promise<void> {
+    await interaction.reply('pong!');
   }
 
   // @Slash('commands')
@@ -37,4 +31,4 @@ export abstract class BasicCommands {
   // }
 }
 
-export default BasicCommands;
+export default Base;

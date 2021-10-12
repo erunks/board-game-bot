@@ -12,15 +12,11 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "noImplicitAny": false,
-    "outDir": "./build",
+    "outDir": "build",
     "sourceMap": true,
     "target": "es2021",
   },
   "exclude": ["node_modules"],
   "include": ["src"],
-  "indent": [
-    true,
-    "spaces",
-    2
-  ]
+  "indent": [true, "spaces", 2]
 }

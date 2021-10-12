@@ -1,15 +1,13 @@
-/* eslint-disable no-console */
-import { Discord, Description, On, ArgsOf } from '@typeit/discord';
+import { Discord, On, ArgsOf } from 'discordx';
 
 @Discord()
-@Description('Basic Events')
 export abstract class BasicEvents {
   @On('ready')
   initialize(): void {
     console.log('Bot logged in.');
   }
 
-  @On('message')
+  @On('messageCreate')
   recievedMessage([message]: ArgsOf<'message'>): void {
     console.log('Got message', message.content);
   }

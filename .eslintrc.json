@@ -22,7 +22,6 @@
   "rules": {
     "consistent-return": 0,
     "import/no-unresolved": "error",
-    "no-console": ["error", { "allow": ["error", "warn"] }],
     "tsdoc/syntax": "warn"
   },
   "settings": {

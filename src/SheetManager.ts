@@ -1,14 +1,15 @@
 import {
   GoogleSpreadsheet,
-  GoogleSpreadsheetRow,
-  GoogleSpreadsheetWorksheet
+  // GoogleSpreadsheetRow,
+  GoogleSpreadsheetWorksheet,
 } from 'google-spreadsheet';
 
 export class SheetManager {
   document: GoogleSpreadsheet;
 
-  construtor() {
+  construtor(): null {
     this.document = null;
+    return;
   }
 
   async connect(): Promise<GoogleSpreadsheet> {
@@ -32,7 +33,9 @@ export class SheetManager {
   }
 
   async addGame(gameInfo: string[]): Promise<string> {
-    if (!this.document) { return; }
+    if (!this.document) {
+      return;
+    }
 
     const sheet = this.getSheet();
     try {
@@ -44,8 +47,10 @@ export class SheetManager {
     }
   }
 
-  getSheet(index: number = 0): GoogleSpreadsheetWorksheet | null {
-    if (!this.document) { return; }
+  getSheet(index = 0): GoogleSpreadsheetWorksheet | null {
+    if (!this.document) {
+      return;
+    }
 
     return this.document.sheetsByIndex[index];
   }
