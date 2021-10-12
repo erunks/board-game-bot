@@ -1,4 +1,5 @@
 # dependencies
+/configs
 /node_modules
 
 # testing

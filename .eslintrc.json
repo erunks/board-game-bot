@@ -1,28 +1,36 @@
 {
-  "env" : {
+  "env": {
     "es2021": true,
     "jest": true,
     "jest/globals": true
   },
   "extends": [
-    "airbnb",
     "eslint:recommended",
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
-    "plugin:import/recommended",
     "prettier"
   ],
   "root": true,
   "parser": "@typescript-eslint/parser",
-  "plugins": ["@typescript-eslint", "jest", "import", "prettier"],
+  "plugins": [
+    "@typescript-eslint/eslint-plugin",
+    "eslint-plugin-tsdoc",
+    "jest",
+    "import",
+    "prettier"
+  ],
   "rules": {
     "consistent-return": 0,
-    "no-console": ["error", { "allow": ["error","warn"] }]
+    "import/no-unresolved": "error",
+    "tsdoc/syntax": "warn"
   },
   "settings": {
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx"]
+    },
     "import/resolver": {
-      "node": {
-        "paths": ["./src"]
+      "typescript": {
+        "project": "./tsconfig.json"
       }
     }
   }
