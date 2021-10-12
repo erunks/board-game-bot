@@ -1,22 +1,42 @@
 import {
+  ButtonInteraction,
   CommandInteraction,
   MessageActionRow,
   MessageButton,
   MessageEmbed
 } from 'discord.js';
 import {
+  ButtonComponent,
+  Client,
   Discord,
   Slash,
   SlashOption
 } from 'discordx';
 import { sendPaginatedEmbeds } from '@discordx/utilities';
 import map from 'lodash/map';
-import BggManager from '../BggManager';
+import BggManager, { BggGame } from '../BggManager';
 import SheetManager from '../SheetManager';
 import { MessageButtonStyles } from 'discord.js/typings/enums';
 
+class OptionWrapper {
+  constructor(
+    public game: BggGame,
+    public owner: string,
+    public location: string,
+    public interaction: CommandInteraction
+  ) {
+    return;
+  }
+}
+
 @Discord()
 export abstract class Sheets {
+  private static  _optionsArguments: Map<string, OptionWrapper> = new Map();
+  
+  static get optionsArguments(): Map<string, OptionWrapper> {
+    return this._optionsArguments;
+  }
+  
   @Slash('document', { description: 'Responds with a link to `The Library` sheet.'})
   async getDocument(interaction: CommandInteraction): Promise<void> {
     interaction.reply(`https://docs.google.com/spreadsheets/d/${process.env.GOOGLE_SHEET_ID}/`);
@@ -44,13 +64,10 @@ export abstract class Sheets {
     @SlashOption('location', { description: 'Assumed to be owner', required: false }) location: string,
     interaction: CommandInteraction
   ): Promise<void> {
+    await interaction.deferReply();
+
     const results = await BggManager.findGame(game);
     const gamesList = await Promise.all(map(results, async (game) => await BggManager.fillOutDetails(game)));
-    
-    const sheetManager = new SheetManager();
-    await sheetManager.connect();
-
-    console.log(gamesList);
 
     const pages = map(gamesList, (currentGame, i) => {
       const embed = new MessageEmbed()
@@ -66,29 +83,21 @@ export abstract class Sheets {
 
       embed.addField('BGG Link', currentGame.link(), false);
 
+      const customId = `add-game-${currentGame.id}`;
       const addGameButton = new MessageActionRow().addComponents([
         new MessageButton({
-          customId: `add-game-${currentGame.id}`,
+          customId,
           style: MessageButtonStyles.PRIMARY,
-          label: 'Add Game',
-          // action: async () => {
-          //   await sheetManager.addGame([currentGame.name, currentGame.players(), owner, owner, currentGame.link()])
-          // }
+          label: `Add: ${currentGame.name}`,
         })
       ]);
 
-      return embed;
+      Sheets._optionsArguments.set(customId, new OptionWrapper(currentGame, owner, location, interaction));
+
+      return { embeds: [embed], components: [addGameButton] };
     });
 
     await sendPaginatedEmbeds(interaction, pages);
-
-    // console.log(gamesList);
-    // let selectedGame = gamesList[2];
-    // selectedGame = await BggManager.fillOutDetails(selectedGame);
-    // console.log(selectedGame);
-
-    // const response = await sheetManager.addGameFromBgg(game);
-    // await interaction.reply(response);
   }
 }
 
