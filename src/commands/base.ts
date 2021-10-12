@@ -1,9 +1,13 @@
-import { Discord, Slash } from 'discordx';
 import { CommandInteraction } from 'discord.js';
-// import get from 'lodash/get';
-// import join from 'lodash/join';
-// import map from 'lodash/map';
-// import sortBy from 'lodash/sortBy';
+import {
+  Client,
+  Discord,
+  Slash
+} from 'discordx';
+import get from 'lodash/get';
+import join from 'lodash/join';
+import map from 'lodash/map';
+import sortBy from 'lodash/sortBy';
 
 @Discord()
 export abstract class Base {
@@ -12,23 +16,22 @@ export abstract class Base {
     await interaction.reply('pong!');
   }
 
-  // @Slash('commands')
-  // @Description('Get the available list of commands')
-  // commands(command: CommandMessage): void {
-  //   const commandList = map(
-  //     sortBy(Client.getCommands(), (o) => o.commandName),
-  //     (command) => {
-  //       const name = get(command, 'commandName');
-  //       const description = get(command, 'description', 'No description available.');
+  @Slash('commands', { description: 'List all commands' })
+  async commands(interaction: CommandInteraction): Promise<void> {
+    const commandList = map(
+      sortBy(Client.allApplicationCommands, (o) => o.name),
+      (command) => {
+        const name = get(command, 'name');
+        const description = get(command, 'description', 'No description available.');
 
-  //       return `> ${name} - ${description}`;
-  //     }
-  //   );
+        return `> ${name} - ${description}`;
+      }
+    );
 
-  //   command.reply(
-  //     "Here is a list of commands:\n" + join(commandList, '\n')
-  //   );
-  // }
+    await interaction.reply(
+      "Here is a list of commands:\n" + join(commandList, '\n')
+    );
+  }
 }
 
 export default Base;
