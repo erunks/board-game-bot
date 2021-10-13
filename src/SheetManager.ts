@@ -34,7 +34,7 @@ export class SheetManager {
 
   async addGame(gameInfo: string[]): Promise<string> {
     if (!this.document) {
-      return;
+      return '';
     }
 
     const sheet = this.getSheet();
@@ -49,7 +49,7 @@ export class SheetManager {
 
   getSheet(index = 0): GoogleSpreadsheetWorksheet | null {
     if (!this.document) {
-      return;
+      return null;
     }
 
     return this.document.sheetsByIndex[index];

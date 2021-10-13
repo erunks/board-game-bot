@@ -1,40 +1,34 @@
 import {
   ButtonInteraction,
   CommandInteraction,
+  Message,
   MessageActionRow,
   MessageButton,
   MessageEmbed
 } from 'discord.js';
+import { MessageButtonStyles } from 'discord.js/typings/enums';
 import {
-  ButtonComponent,
-  Client,
   Discord,
   Slash,
   SlashOption
 } from 'discordx';
-import { sendPaginatedEmbeds } from '@discordx/utilities';
-import map from 'lodash/map';
+import max from 'lodash/max';
+import min from 'lodash/min';
+import slice from 'lodash/slice';
 import BggManager, { BggGame } from '../BggManager';
 import SheetManager from '../SheetManager';
-import { MessageButtonStyles } from 'discord.js/typings/enums';
-
-class OptionWrapper {
-  constructor(
-    public game: BggGame,
-    public owner: string,
-    public location: string,
-    public interaction: CommandInteraction
-  ) {
-    return;
-  }
-}
 
 @Discord()
 export abstract class Sheets {
-  private static  _optionsArguments: Map<string, OptionWrapper> = new Map();
-  
-  static get optionsArguments(): Map<string, OptionWrapper> {
-    return this._optionsArguments;
+  private static _interactionGames: Map<CommandInteraction, BggGame[]> = new Map();
+  private static _interactionIndex: Map<CommandInteraction, number> = new Map();
+
+  static get interactionGames(): Map<CommandInteraction, BggGame[]> {
+    return this._interactionGames;
+  }
+
+  static get interactionIndex(): Map<CommandInteraction, number> {
+    return this._interactionIndex;
   }
   
   @Slash('document', { description: 'Responds with a link to `The Library` sheet.'})
@@ -67,37 +61,134 @@ export abstract class Sheets {
     await interaction.deferReply();
 
     const results = await BggManager.findGame(game);
-    const gamesList = await Promise.all(map(results, async (game) => await BggManager.fillOutDetails(game)));
+    let gamesList;
+    if (results.length === 1) {
+      gamesList = [await BggManager.fillOutDetails(results[0])];
+    } else {
+      gamesList = [await BggManager.fillOutDetails(results[0]), ...slice(results, 1)];
+    }
 
-    const pages = map(gamesList, (currentGame, i) => {
-      const embed = new MessageEmbed()
-        .setFooter(`Game ${i + 1} of ${gamesList.length}`)
-        .setTitle(currentGame.name)
-        .setThumbnail(currentGame.thumbnail)
-        .addField('Game Type', currentGame.gameType(), true)
-        .addField('Players', currentGame.players(), true);
+    Sheets._interactionGames.set(interaction, gamesList);
+    Sheets._interactionIndex.set(interaction, 0);
 
-      if (currentGame.yearPublished) {
-        embed.addField('Year Published', currentGame.yearPublished, false);
-      }
-
-      embed.addField('BGG Link', currentGame.link(), false);
-
-      const customId = `add-game-${currentGame.id}`;
-      const addGameButton = new MessageActionRow().addComponents([
-        new MessageButton({
-          customId,
-          style: MessageButtonStyles.PRIMARY,
-          label: `Add: ${currentGame.name}`,
-        })
-      ]);
-
-      Sheets._optionsArguments.set(customId, new OptionWrapper(currentGame, owner, location, interaction));
-
-      return { embeds: [embed], components: [addGameButton] };
+    const message = await interaction.followUp({
+      embeds: [this.getGameEmbed(interaction, gamesList.length)],
+      fetchReply: true,
+      components: [this.getActionRow(interaction)]
     });
 
-    await sendPaginatedEmbeds(interaction, pages);
+    if (!(message instanceof Message)) {
+      throw Error("InvalidMessage instance");
+    }
+
+    const collector = message.createMessageComponentCollector();
+
+    collector.on("collect", async (collectInteraction: ButtonInteraction) => {
+      await collectInteraction.deferUpdate();
+
+      const currentIndex = this.getCurrentIndex(interaction);
+      const buttonId = collectInteraction.customId;
+
+      switch (buttonId) {
+        case 'previous-game':
+          Sheets._interactionIndex.set(interaction, max([0, currentIndex - 1]));
+          break;
+        case 'next-game':
+          Sheets._interactionIndex.set(interaction, min([gamesList.length - 1, currentIndex + 1]));
+          const nextGame = this.getCurrentGame(interaction)
+          if (!nextGame.loaded) await BggManager.fillOutDetails(nextGame);
+          break;
+        case 'add-game':
+          await this.addCurrentGame(interaction, owner, location ?? owner);
+          break;
+      }
+
+      await collectInteraction.editReply({
+        embeds: [this.getGameEmbed(interaction, gamesList.length)],
+        components: [this.getActionRow(interaction)]
+      });
+    });
+
+    collector.on("end", async () => {
+      if (!message.editable || message.deleted) return;
+
+      await message.edit({ components: [] });
+    });
+  }
+
+  private async addCurrentGame(interaction: CommandInteraction, owner: string, location: string): Promise<void> {
+    const currentGame = this.getCurrentGame(interaction);
+    const sheetManager = new SheetManager();
+    await sheetManager.connect();
+    const response = await sheetManager.addGame([currentGame.name, currentGame.players(), owner, location, currentGame.link()]);
+    await interaction.followUp(response);
+  }
+
+  private getCurrentGame(interaction: CommandInteraction): BggGame {
+    const currentIndex = Sheets._interactionIndex.get(interaction);
+    const gamesList = Sheets._interactionGames.get(interaction);
+    return gamesList[currentIndex];
+  }
+
+  private getCurrentIndex(interaction: CommandInteraction): number {
+    return Sheets._interactionIndex.get(interaction);
+  }
+
+  private getAddGameButton(interaction: CommandInteraction): MessageButton {
+    const currentGame = this.getCurrentGame(interaction);
+
+    return new MessageButton({
+      customId: `add-game`,
+      style: MessageButtonStyles.PRIMARY,
+      label: `Add: ${currentGame.name}`,
+    });
+  }
+
+  private getNextButton(interaction: CommandInteraction): MessageButton {
+    const currentIndex = this.getCurrentIndex(interaction);
+    const gamesList = Sheets._interactionGames.get(interaction);
+
+    return new MessageButton({
+      customId: 'next-game',
+      style: MessageButtonStyles.PRIMARY,
+      label: 'Next',
+      disabled: currentIndex === gamesList.length - 1,
+    });
+  }
+
+  private getPreviousButton(interaction: CommandInteraction): MessageButton {
+    const currentIndex = this.getCurrentIndex(interaction);
+
+    return new MessageButton({
+      customId: 'previous-game',
+      style: MessageButtonStyles.PRIMARY,
+      label: 'Previous',
+      disabled: currentIndex === 0,
+    });
+  }
+
+  private getActionRow(interaction: CommandInteraction) {
+    return new MessageActionRow().addComponents(
+      this.getPreviousButton(interaction),
+      this.getNextButton(interaction),
+      this.getAddGameButton(interaction)
+    );
+  }
+
+  private getGameEmbed(interaction: CommandInteraction, totalGames: number): MessageEmbed {
+    const game = this.getCurrentGame(interaction);
+    const currentIndex = this.getCurrentIndex(interaction);
+    const embed = new MessageEmbed()
+      .setFooter(`Game ${currentIndex + 1} of ${totalGames}`)
+      .setTitle(game.name)
+      .setThumbnail(game.thumbnail)
+      .addField('Game Type', game.gameType(), true)
+      .addField('Players', game.players(), true);
+
+    if (game.yearPublished) embed.addField('Year Published', game.yearPublished, false);
+
+    embed.addField('BGG Link', game.link(), false);
+    return embed;
   }
 }
 

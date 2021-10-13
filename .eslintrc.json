@@ -20,8 +20,10 @@
     "prettier"
   ],
   "rules": {
-    "consistent-return": 0,
+    "@typescript-eslint/no-explicit-any": "off",
+    "consistent-return": "error",
     "import/no-unresolved": "error",
+    "no-case-declarations": "off",
     "tsdoc/syntax": "warn"
   },
   "settings": {
