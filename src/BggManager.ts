@@ -61,14 +61,17 @@ export class BggManager {
   }
 
   static async findGame(game: string): Promise<BggGame[]> {
-    const query = replace(game, /\W/, '');
+    const query = replace(game, /[^a-z0-9 ]/gi, '');
     const response = await axios.get(
       `https://api.geekdo.com/xmlapi2/search?query=${query}`
     );
     const games = get(parse(response.data, this._parserOptions), 'items.item');
 
-    if (games instanceof Array)
+    if (!games || games === undefined) {
+      return [];
+    } else if (games instanceof Array) {
       return map(games, (game) => this.createBggGame(game));
+    }
     return [this.createBggGame(games)];
   }
 
