@@ -13,7 +13,7 @@
     "lint:fix": "eslint ./src --fix",
     "lint:staged": "lint-staged",
     "lint": "eslint . --quiet",
-    "precommit": "run-s lint:staged test git:update",
+    "precommit": "run-s lint:staged git:update",
     "prepare": "husky install",
     "pretty:all": "pretty-quick",
     "pretty:staged": "pretty-quick --staged",
