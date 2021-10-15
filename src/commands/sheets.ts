@@ -11,8 +11,10 @@ import { Discord, Slash, SlashOption } from 'discordx';
 import max from 'lodash/max';
 import min from 'lodash/min';
 import slice from 'lodash/slice';
-import BggManager, { BggGame } from '../BggManager';
-import SheetManager from '../SheetManager';
+import truncate from 'lodash/truncate';
+import BggManager from '../managers/BggManager';
+import SheetManager from '../managers/SheetManager';
+import BggGame from '../models/BggGame';
 
 @Discord()
 export abstract class Sheets {
@@ -188,7 +190,7 @@ export abstract class Sheets {
     return new MessageButton({
       customId: `add-game`,
       style: MessageButtonStyles.PRIMARY,
-      label: `Add: ${currentGame.name}`,
+      label: truncate(`Add: ${currentGame.name}`, { length: 80 }),
     });
   }
 
@@ -231,7 +233,7 @@ export abstract class Sheets {
     const currentIndex = this.getCurrentIndex(interaction);
     const embed = new MessageEmbed()
       .setFooter(`Game ${currentIndex + 1} of ${totalGames}`)
-      .setTitle(game.name)
+      .setTitle(truncate(game.name, { length: 80 }))
       .setThumbnail(game.thumbnail)
       .addField('Game Type', game.gameType(), true)
       .addField('Players', game.players(), true);

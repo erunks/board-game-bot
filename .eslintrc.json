@@ -20,7 +20,7 @@
     "prettier"
   ],
   "rules": {
-    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-explicit-any": "error",
     "consistent-return": "error",
     "import/no-unresolved": "error",
     "no-case-declarations": "off",

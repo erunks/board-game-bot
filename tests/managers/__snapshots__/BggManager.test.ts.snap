@@ -1,0 +1,643 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BggManager #getGameInfoById when the request succeeds returns the json data 1`] = `
+Object {
+  "description": "Secret Hitler is a dramatic game of political intrigue and betrayal set in 1930s Germany. Each player is randomly and secretly assigned to be a liberal or a fascist, and one player is Secret Hitler. The fascists coordinate to sow distrust and install their cold-blooded leader; the liberals must find and stop the Secret Hitler before it's too late. The liberal team always has a majority.&#10;&#10;At the beginning of the game, players close their eyes, and the fascists reveal themselves to one another. Secret Hitler keeps his eyes closed, but puts his thumb up so the fascists can see who he is. The fascists learn who Hitler is, but Hitler doesn't know who his fellow fascists are, and the liberals don't know who anyone is.&#10;&#10;Each round, players elect a President and a Chancellor who will work together to enact a law from a random deck. If the government passes a fascist law, players must try to figure out if they were betrayed or simply unlucky. Secret Hitler also features government powers that come into play as fascism advances. The fascists will use those powers to create chaos unless liberals can pull the nation back from the brink of war.&#10;&#10;The objective of the liberal team is to pass five liberal policies or assassinate Secret Hitler. The objective of the fascist team is to pass six fascist policies or elect Secret Hitler chancellor after three fascist policies have passed.&#10;&#10;",
+  "id": "188834",
+  "image": "https://cf.geekdo-images.com/rAQ3hIXoH6xDcj41v9iqCg__original/img/7oKwNUYakx3-vHUBLHWVuFNKfl4=/0x0/filters:format(jpeg)/pic5164305.jpg",
+  "link": Array [
+    Object {
+      "id": "1023",
+      "type": "boardgamecategory",
+      "value": "Bluffing",
+    },
+    Object {
+      "id": "1002",
+      "type": "boardgamecategory",
+      "value": "Card Game",
+    },
+    Object {
+      "id": "1039",
+      "type": "boardgamecategory",
+      "value": "Deduction",
+    },
+    Object {
+      "id": "1079",
+      "type": "boardgamecategory",
+      "value": "Humor",
+    },
+    Object {
+      "id": "1030",
+      "type": "boardgamecategory",
+      "value": "Party Game",
+    },
+    Object {
+      "id": "1001",
+      "type": "boardgamecategory",
+      "value": "Political",
+    },
+    Object {
+      "id": "1120",
+      "type": "boardgamecategory",
+      "value": "Print & Play",
+    },
+    Object {
+      "id": "2891",
+      "type": "boardgamemechanic",
+      "value": "Hidden Roles",
+    },
+    Object {
+      "id": "2685",
+      "type": "boardgamemechanic",
+      "value": "Player Elimination",
+    },
+    Object {
+      "id": "2019",
+      "type": "boardgamemechanic",
+      "value": "Team-Based Game",
+    },
+    Object {
+      "id": "2814",
+      "type": "boardgamemechanic",
+      "value": "Traitor Game",
+    },
+    Object {
+      "id": "2017",
+      "type": "boardgamemechanic",
+      "value": "Voting",
+    },
+    Object {
+      "id": "8374",
+      "type": "boardgamefamily",
+      "value": "Crowdfunding: Kickstarter",
+    },
+    Object {
+      "id": "70948",
+      "type": "boardgamefamily",
+      "value": "Digital Implementations: Tabletopia",
+    },
+    Object {
+      "id": "2989",
+      "type": "boardgamefamily",
+      "value": "Game: Werewolf / Mafia",
+    },
+    Object {
+      "id": "87375",
+      "type": "boardgamedesigner",
+      "value": "Mike Boxleiter",
+    },
+    Object {
+      "id": "87376",
+      "type": "boardgamedesigner",
+      "value": "Tommy Maranges",
+    },
+    Object {
+      "id": "75735",
+      "type": "boardgameartist",
+      "value": "Mackenzie Schubert",
+    },
+    Object {
+      "id": "34112",
+      "type": "boardgamepublisher",
+      "value": "Goat Wolf & Cabbage",
+    },
+    Object {
+      "id": "4",
+      "type": "boardgamepublisher",
+      "value": "(Self-Published)",
+    },
+    Object {
+      "id": "14966",
+      "type": "boardgamepublisher",
+      "value": "Print & Play Productions",
+    },
+  ],
+  "maxplayers": Object {
+    "value": "10",
+  },
+  "maxplaytime": Object {
+    "value": "45",
+  },
+  "minage": Object {
+    "value": "13",
+  },
+  "minplayers": Object {
+    "value": "5",
+  },
+  "minplaytime": Object {
+    "value": "45",
+  },
+  "name": Object {
+    "sortindex": "1",
+    "type": "primary",
+    "value": "Secret Hitler",
+  },
+  "playingtime": Object {
+    "value": "45",
+  },
+  "poll": Array [
+    Object {
+      "name": "suggested_numplayers",
+      "results": Array [
+        Object {
+          "numplayers": "1",
+          "result": Array [
+            Object {
+              "numvotes": "0",
+              "value": "Best",
+            },
+            Object {
+              "numvotes": "0",
+              "value": "Recommended",
+            },
+            Object {
+              "numvotes": "199",
+              "value": "Not Recommended",
+            },
+          ],
+        },
+        Object {
+          "numplayers": "2",
+          "result": Array [
+            Object {
+              "numvotes": "0",
+              "value": "Best",
+            },
+            Object {
+              "numvotes": "0",
+              "value": "Recommended",
+            },
+            Object {
+              "numvotes": "199",
+              "value": "Not Recommended",
+            },
+          ],
+        },
+        Object {
+          "numplayers": "3",
+          "result": Array [
+            Object {
+              "numvotes": "0",
+              "value": "Best",
+            },
+            Object {
+              "numvotes": "0",
+              "value": "Recommended",
+            },
+            Object {
+              "numvotes": "200",
+              "value": "Not Recommended",
+            },
+          ],
+        },
+        Object {
+          "numplayers": "4",
+          "result": Array [
+            Object {
+              "numvotes": "0",
+              "value": "Best",
+            },
+            Object {
+              "numvotes": "2",
+              "value": "Recommended",
+            },
+            Object {
+              "numvotes": "198",
+              "value": "Not Recommended",
+            },
+          ],
+        },
+        Object {
+          "numplayers": "5",
+          "result": Array [
+            Object {
+              "numvotes": "5",
+              "value": "Best",
+            },
+            Object {
+              "numvotes": "87",
+              "value": "Recommended",
+            },
+            Object {
+              "numvotes": "133",
+              "value": "Not Recommended",
+            },
+          ],
+        },
+        Object {
+          "numplayers": "6",
+          "result": Array [
+            Object {
+              "numvotes": "20",
+              "value": "Best",
+            },
+            Object {
+              "numvotes": "144",
+              "value": "Recommended",
+            },
+            Object {
+              "numvotes": "59",
+              "value": "Not Recommended",
+            },
+          ],
+        },
+        Object {
+          "numplayers": "7",
+          "result": Array [
+            Object {
+              "numvotes": "106",
+              "value": "Best",
+            },
+            Object {
+              "numvotes": "132",
+              "value": "Recommended",
+            },
+            Object {
+              "numvotes": "11",
+              "value": "Not Recommended",
+            },
+          ],
+        },
+        Object {
+          "numplayers": "8",
+          "result": Array [
+            Object {
+              "numvotes": "163",
+              "value": "Best",
+            },
+            Object {
+              "numvotes": "80",
+              "value": "Recommended",
+            },
+            Object {
+              "numvotes": "6",
+              "value": "Not Recommended",
+            },
+          ],
+        },
+        Object {
+          "numplayers": "9",
+          "result": Array [
+            Object {
+              "numvotes": "104",
+              "value": "Best",
+            },
+            Object {
+              "numvotes": "121",
+              "value": "Recommended",
+            },
+            Object {
+              "numvotes": "14",
+              "value": "Not Recommended",
+            },
+          ],
+        },
+        Object {
+          "numplayers": "10",
+          "result": Array [
+            Object {
+              "numvotes": "128",
+              "value": "Best",
+            },
+            Object {
+              "numvotes": "93",
+              "value": "Recommended",
+            },
+            Object {
+              "numvotes": "19",
+              "value": "Not Recommended",
+            },
+          ],
+        },
+        Object {
+          "numplayers": "10+",
+          "result": Array [
+            Object {
+              "numvotes": "7",
+              "value": "Best",
+            },
+            Object {
+              "numvotes": "10",
+              "value": "Recommended",
+            },
+            Object {
+              "numvotes": "144",
+              "value": "Not Recommended",
+            },
+          ],
+        },
+      ],
+      "title": "User Suggested Number of Players",
+      "totalvotes": "274",
+    },
+    Object {
+      "name": "suggested_playerage",
+      "results": Object {
+        "result": Array [
+          Object {
+            "numvotes": "0",
+            "value": "2",
+          },
+          Object {
+            "numvotes": "0",
+            "value": "3",
+          },
+          Object {
+            "numvotes": "0",
+            "value": "4",
+          },
+          Object {
+            "numvotes": "0",
+            "value": "5",
+          },
+          Object {
+            "numvotes": "0",
+            "value": "6",
+          },
+          Object {
+            "numvotes": "2",
+            "value": "8",
+          },
+          Object {
+            "numvotes": "3",
+            "value": "10",
+          },
+          Object {
+            "numvotes": "23",
+            "value": "12",
+          },
+          Object {
+            "numvotes": "24",
+            "value": "14",
+          },
+          Object {
+            "numvotes": "17",
+            "value": "16",
+          },
+          Object {
+            "numvotes": "3",
+            "value": "18",
+          },
+          Object {
+            "numvotes": "1",
+            "value": "21 and up",
+          },
+        ],
+      },
+      "title": "User Suggested Player Age",
+      "totalvotes": "73",
+    },
+    Object {
+      "name": "language_dependence",
+      "results": Object {
+        "result": Array [
+          Object {
+            "level": "1",
+            "numvotes": "6",
+            "value": "No necessary in-game text",
+          },
+          Object {
+            "level": "2",
+            "numvotes": "23",
+            "value": "Some necessary text - easily memorized or small crib sheet",
+          },
+          Object {
+            "level": "3",
+            "numvotes": "0",
+            "value": "Moderate in-game text - needs crib sheet or paste ups",
+          },
+          Object {
+            "level": "4",
+            "numvotes": "0",
+            "value": "Extensive use of text - massive conversion needed to be playable",
+          },
+          Object {
+            "level": "5",
+            "numvotes": "0",
+            "value": "Unplayable in another language",
+          },
+        ],
+      },
+      "title": "Language Dependence",
+      "totalvotes": "29",
+    },
+  ],
+  "thumbnail": "https://cf.geekdo-images.com/rAQ3hIXoH6xDcj41v9iqCg__thumb/img/xA2T7PiwN3Z8pwAksicoCOA1tf0=/fit-in/200x150/filters:strip_icc()/pic5164305.jpg",
+  "type": "boardgame",
+  "versions": Object {
+    "item": Array [
+      Object {
+        "depth": Object {
+          "value": "2.125",
+        },
+        "id": "292643",
+        "image": "https://cf.geekdo-images.com/Kbs6vVX1HNPGd7PEq1SEYw__original/img/wCoXaLIA_OVhuC01PNcrqw2KOU8=/0x0/filters:format(png)/pic2771488.png",
+        "length": Object {
+          "value": "15",
+        },
+        "link": Array [
+          Object {
+            "id": "188834",
+            "inbound": "true",
+            "type": "boardgameversion",
+            "value": "Secret Hitler",
+          },
+          Object {
+            "id": "34112",
+            "type": "boardgamepublisher",
+            "value": "Goat Wolf & Cabbage",
+          },
+          Object {
+            "id": "75735",
+            "type": "boardgameartist",
+            "value": "Mackenzie Schubert",
+          },
+          Object {
+            "id": "2184",
+            "type": "language",
+            "value": "English",
+          },
+        ],
+        "name": Object {
+          "sortindex": "1",
+          "type": "primary",
+          "value": "English first edition",
+        },
+        "productcode": Object {
+          "value": "",
+        },
+        "thumbnail": "https://cf.geekdo-images.com/Kbs6vVX1HNPGd7PEq1SEYw__thumb/img/oydb4ux2M92yQaeKLWKl0Qu_k-k=/fit-in/200x150/filters:strip_icc()/pic2771488.png",
+        "type": "boardgameversion",
+        "weight": Object {
+          "value": "2",
+        },
+        "width": Object {
+          "value": "6",
+        },
+        "yearpublished": Object {
+          "value": "2016",
+        },
+      },
+      Object {
+        "depth": Object {
+          "value": "1.9685",
+        },
+        "id": "363714",
+        "image": "https://cf.geekdo-images.com/DHPsGchaEUIgmvE70ARnsQ__original/img/PQ_MN7-XoObUDax_1W6Nc36cm5A=/0x0/filters:format(jpeg)/pic5164299.jpg",
+        "length": Object {
+          "value": "14.9606",
+        },
+        "link": Array [
+          Object {
+            "id": "188834",
+            "inbound": "true",
+            "type": "boardgameversion",
+            "value": "Secret Hitler",
+          },
+          Object {
+            "id": "34112",
+            "type": "boardgamepublisher",
+            "value": "Goat Wolf & Cabbage",
+          },
+          Object {
+            "id": "75735",
+            "type": "boardgameartist",
+            "value": "Mackenzie Schubert",
+          },
+          Object {
+            "id": "2184",
+            "type": "language",
+            "value": "English",
+          },
+        ],
+        "name": Object {
+          "sortindex": "1",
+          "type": "primary",
+          "value": "English wooden box edition",
+        },
+        "productcode": Object {
+          "value": "",
+        },
+        "thumbnail": "https://cf.geekdo-images.com/DHPsGchaEUIgmvE70ARnsQ__thumb/img/-4q5kbd8pSjzMbEIj-kXxSHDjy0=/fit-in/200x150/filters:strip_icc()/pic5164299.jpg",
+        "type": "boardgameversion",
+        "weight": Object {
+          "value": "0",
+        },
+        "width": Object {
+          "value": "5.90551",
+        },
+        "yearpublished": Object {
+          "value": "2016",
+        },
+      },
+      Object {
+        "depth": Object {
+          "value": "0",
+        },
+        "id": "377298",
+        "image": "https://cf.geekdo-images.com/Kbs6vVX1HNPGd7PEq1SEYw__original/img/wCoXaLIA_OVhuC01PNcrqw2KOU8=/0x0/filters:format(png)/pic2771488.png",
+        "length": Object {
+          "value": "0",
+        },
+        "link": Array [
+          Object {
+            "id": "188834",
+            "inbound": "true",
+            "type": "boardgameversion",
+            "value": "Secret Hitler",
+          },
+          Object {
+            "id": "14966",
+            "type": "boardgamepublisher",
+            "value": "Print & Play Productions",
+          },
+          Object {
+            "id": "2199",
+            "type": "language",
+            "value": "Polish",
+          },
+        ],
+        "name": Object {
+          "sortindex": "1",
+          "type": "primary",
+          "value": "Polish edition",
+        },
+        "productcode": Object {
+          "value": "",
+        },
+        "thumbnail": "https://cf.geekdo-images.com/Kbs6vVX1HNPGd7PEq1SEYw__thumb/img/oydb4ux2M92yQaeKLWKl0Qu_k-k=/fit-in/200x150/filters:strip_icc()/pic2771488.png",
+        "type": "boardgameversion",
+        "weight": Object {
+          "value": "0",
+        },
+        "width": Object {
+          "value": "0",
+        },
+        "yearpublished": Object {
+          "value": "2016",
+        },
+      },
+      Object {
+        "depth": Object {
+          "value": "0",
+        },
+        "id": "301129",
+        "image": "https://cf.geekdo-images.com/Kbs6vVX1HNPGd7PEq1SEYw__original/img/wCoXaLIA_OVhuC01PNcrqw2KOU8=/0x0/filters:format(png)/pic2771488.png",
+        "length": Object {
+          "value": "0",
+        },
+        "link": Array [
+          Object {
+            "id": "188834",
+            "inbound": "true",
+            "type": "boardgameversion",
+            "value": "Secret Hitler",
+          },
+          Object {
+            "id": "4",
+            "type": "boardgamepublisher",
+            "value": "(Self-Published)",
+          },
+          Object {
+            "id": "34112",
+            "type": "boardgamepublisher",
+            "value": "Goat Wolf & Cabbage",
+          },
+          Object {
+            "id": "30025",
+            "type": "boardgamepublisher",
+            "value": "Rattlebox Games",
+          },
+          Object {
+            "id": "2184",
+            "type": "language",
+            "value": "English",
+          },
+        ],
+        "name": Object {
+          "sortindex": "1",
+          "type": "primary",
+          "value": "Print & Play edition",
+        },
+        "productcode": Object {
+          "value": "",
+        },
+        "thumbnail": "https://cf.geekdo-images.com/Kbs6vVX1HNPGd7PEq1SEYw__thumb/img/oydb4ux2M92yQaeKLWKl0Qu_k-k=/fit-in/200x150/filters:strip_icc()/pic2771488.png",
+        "type": "boardgameversion",
+        "weight": Object {
+          "value": "0",
+        },
+        "width": Object {
+          "value": "0",
+        },
+        "yearpublished": Object {
+          "value": "2015",
+        },
+      },
+    ],
+  },
+  "yearpublished": Object {
+    "value": "2016",
+  },
+}
+`;
