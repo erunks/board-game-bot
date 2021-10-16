@@ -1,9 +1,13 @@
 {
   "name": "board-game-bot",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "src/DiscordBot.ts",
   "license": "ISC",
+  "engines": {
+    "node": ">=16.11.0"
+  },
+  "engineStrict": true,
   "scripts": {
     "build": "tsc",
     "coverage": "open ./coverage/lcov-report/index.html",
