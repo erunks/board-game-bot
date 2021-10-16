@@ -5,7 +5,8 @@
   "main": "src/DiscordBot.ts",
   "license": "ISC",
   "engines": {
-    "node": ">=16.11.0"
+    "node": ">=16.11.0",
+    "npm": ">=8.0.0"
   },
   "engineStrict": true,
   "scripts": {
@@ -31,6 +32,7 @@
     "@types/google-spreadsheet": "^3.1.5",
     "@types/lodash": "^4.14.175",
     "axios": "^0.22.0",
+    "discord-api-types": "^0.23.1",
     "discord.js": "^13.2.0",
     "discordx": "^6.1.2",
     "dotenv": "^10.0.0",
