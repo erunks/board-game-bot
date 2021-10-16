@@ -14,6 +14,6 @@
     "target": "es2021"
   },
   "exclude": ["node_modules"],
-  "include": ["src", "tests"],
+  "include": ["src"],
   "indent": [true, "spaces", 2]
 }
