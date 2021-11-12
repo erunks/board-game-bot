@@ -10,6 +10,15 @@ export interface IBggGame {
 }
 
 export class BggGame implements IBggGame {
+  public static gameType(type: string): string {
+    switch (type) {
+      case 'boardgameexpansion':
+        return 'Expansion';
+      default:
+        return 'Board Game';
+    }
+  }
+
   constructor(
     public id: string,
     public name: string,
@@ -24,12 +33,7 @@ export class BggGame implements IBggGame {
   }
 
   gameType(): string {
-    switch (this.type) {
-      case 'boardgameexpansion':
-        return 'Expansion';
-      default:
-        return 'Board Game';
-    }
+    return BggGame.gameType(this.type);
   }
 
   link(): string {

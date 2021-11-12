@@ -1,7 +1,9 @@
 import {
   GoogleSpreadsheet,
+  GoogleSpreadsheetRow,
   GoogleSpreadsheetWorksheet,
 } from 'google-spreadsheet';
+import SheetGame from '../models/SheetGame';
 
 export class SheetManager {
   document: GoogleSpreadsheet;
@@ -44,6 +46,16 @@ export class SheetManager {
       console.error(err);
       return `Failed to add ${gameInfo[0]}`;
     }
+  }
+
+  async getGames(): Promise<SheetGame[]> {
+    if (!this.document) {
+      return [];
+    }
+
+    const sheet = this.getSheet();
+    const rows: GoogleSpreadsheetRow[] = await sheet.getRows();
+    return rows.map((row) => SheetGame.fromSpreadsheetRow(row));
   }
 
   getSheet(index = 0): GoogleSpreadsheetWorksheet | null {
