@@ -3,7 +3,10 @@ import {
   GoogleSpreadsheetRow,
   GoogleSpreadsheetWorksheet,
 } from 'google-spreadsheet';
+import GameFilter from '../models/GameFilter';
 import SheetGame from '../models/SheetGame';
+import filter from 'lodash/filter';
+import map from 'lodash/map';
 
 export class SheetManager {
   document: GoogleSpreadsheet;
@@ -48,14 +51,20 @@ export class SheetManager {
     }
   }
 
-  async getGames(): Promise<SheetGame[]> {
+  async getGames(gameFilter: GameFilter): Promise<SheetGame[]> {
     if (!this.document) {
       return [];
     }
 
     const sheet = this.getSheet();
     const rows: GoogleSpreadsheetRow[] = await sheet.getRows();
-    return rows.map((row) => SheetGame.fromSpreadsheetRow(row));
+    let sheetGames = map(rows, (row) => SheetGame.fromSpreadsheetRow(row));
+
+    if (gameFilter.hasAny()) {
+      sheetGames = filter(sheetGames, (game) => game.like(gameFilter));
+    }
+
+    return sheetGames;
   }
 
   getSheet(index = 0): GoogleSpreadsheetWorksheet | null {

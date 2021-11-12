@@ -1,6 +1,12 @@
 import { GoogleSpreadsheetRow } from 'google-spreadsheet';
 import get from 'lodash/get';
+import includes from 'lodash/includes';
+import inRange from 'lodash/inRange';
+import lowerCase from 'lodash/lowerCase';
+import some from 'lodash/some';
 import split from 'lodash/split';
+import words from 'lodash/words';
+import GameFilter from './GameFilter';
 import BggGame from './BggGame';
 
 export interface ISheetGame {
@@ -32,24 +38,24 @@ export class SheetGame implements ISheetGame {
     return;
   }
 
-  get id(): string {
+  get id(): number {
     const bggIdRegex = /.*boardgamegeek.+\/(\d+).*/i;
     const matches = this.bggLink.match(bggIdRegex);
 
-    return get(matches, '[1]', '-1');
+    return parseInt(get(matches, '[1]', '-1'));
   }
 
   get loaded(): boolean {
     return true;
   }
 
-  get minPlayers(): string {
-    return split(this.playerCount, '-')[0];
+  get minPlayers(): number {
+    return parseInt(split(this.playerCount, '-')[0]);
   }
 
-  get maxPlayers(): string {
+  get maxPlayers(): number {
     const result = split(this.playerCount, '-');
-    return get(result, '[1]', get(result, '[0]', '0'));
+    return parseInt(get(result, '[1]', get(result, '[0]', '0')));
   }
 
   get thumbnail(): string {
@@ -67,8 +73,37 @@ export class SheetGame implements ISheetGame {
     return null;
   }
 
+  _similarTo(field: string, value: string): boolean {
+    const fieldValue = this[field];
+    const valueWords = words(lowerCase(value));
+    const fieldWords = words(lowerCase(fieldValue));
+
+    return some(valueWords, (word) => includes(fieldWords, word));
+  }
+
   gameType(): string {
     return BggGame.gameType(this.type);
+  }
+
+  like(filter: GameFilter): boolean {
+    const likeName = this._similarTo('name', filter.name);
+    const likeOwner = this._similarTo('owner', filter.owner);
+    const likeLocation = this._similarTo('location', filter.location);
+    const playerCountWords = words(filter.playerCount);
+    let likePlayerCount: boolean;
+    if (playerCountWords.length > 1) {
+      likePlayerCount = some(playerCountWords, (count) =>
+        inRange(parseInt(count), this.minPlayers, this.maxPlayers)
+      );
+    } else {
+      likePlayerCount = inRange(
+        parseInt(playerCountWords[0]),
+        this.minPlayers,
+        this.maxPlayers
+      );
+    }
+
+    return likeName || likeOwner || likeLocation || likePlayerCount;
   }
 
   link(): string {

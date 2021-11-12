@@ -10,16 +10,14 @@ import {
 } from 'discord.js';
 import { MessageButtonStyles } from 'discord.js/typings/enums';
 import { Discord, Slash, SlashOption } from 'discordx';
-import join from 'lodash/join';
-import map from 'lodash/map';
 import max from 'lodash/max';
 import min from 'lodash/min';
 import slice from 'lodash/slice';
 import truncate from 'lodash/truncate';
-import { isConstructorDeclaration } from 'typescript';
 import BggManager from '../managers/BggManager';
 import SheetManager from '../managers/SheetManager';
 import BggGame from '../models/BggGame';
+import GameFilter from '../models/GameFilter';
 import SheetGame from '../models/SheetGame';
 
 @Discord()
@@ -151,12 +149,29 @@ export abstract class Sheets {
     return null;
   }
 
-  @Slash('games', { description: 'Lists all games in the sheet.' })
-  async getGames(interaction: CommandInteraction): Promise<void> {
+  @Slash('viewgames', {
+    description:
+      'Lists all games in the sheet, with optional filtering by field.',
+  })
+  async getGames(
+    @SlashOption('name', { required: false, description: 'Filters' })
+    name: string,
+    @SlashOption('playercount', {
+      required: false,
+      description:
+        'Filter can be a range (e.g. 1-4) or a single number (e.g. 5)',
+    })
+    playerCount: string,
+    @SlashOption('location', { required: false }) location: string,
+    @SlashOption('owner', { required: false }) owner: string,
+    interaction: CommandInteraction
+  ): Promise<void> {
     await interaction.deferReply();
     const sheetManager = new SheetManager();
     await sheetManager.connect();
-    const games: SheetGame[] = await sheetManager.getGames();
+    const games: SheetGame[] = await sheetManager.getGames(
+      new GameFilter({ name, playerCount, location, owner })
+    );
 
     this.setSheetInteractionGames(games, interaction);
 
@@ -229,8 +244,6 @@ export abstract class Sheets {
     message: Message;
     collector: InteractionCollector<Interaction>;
   }> {
-    console.log(interaction, list);
-
     const message = await interaction.followUp({
       embeds: [this.getGameEmbed(interaction, list.length)],
       fetchReply: true,
@@ -311,7 +324,7 @@ export abstract class Sheets {
       .addField('Players', game.players(), true);
 
     game.yearPublished &&
-      embed.addField('Year Published', game.yearPublished, false);
+      embed.addField('Year Published', game.yearPublished.toString(), false);
     game.link() && embed.addField('BGG Link', game.link(), false);
 
     return embed;
