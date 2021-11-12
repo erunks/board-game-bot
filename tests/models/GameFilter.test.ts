@@ -3,6 +3,9 @@ import GameFilter from '../../src/models/GameFilter';
 describe('GameFilter', () => {
   const gameFilter = new GameFilter({
     name: 'Name filter',
+    playerCount: '2',
+    owner: 'Me',
+    location: 'My house',
   });
 
   it('should create an instance', () => {

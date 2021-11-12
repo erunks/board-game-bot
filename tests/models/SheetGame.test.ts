@@ -1,3 +1,4 @@
+import { GoogleSpreadsheetRow } from 'google-spreadsheet';
 import BggGame from '../../src/models/BggGame';
 import GameFilter from '../../src/models/GameFilter';
 import SheetGame from '../../src/models/SheetGame';
@@ -13,6 +14,34 @@ describe('SheetGame', () => {
 
   it('should create an instance', () => {
     expect(sheetGame).toBeTruthy();
+  });
+
+  describe('static methods', () => {
+    describe('#fromSpreadsheetRow', () => {
+      const row: GoogleSpreadsheetRow = {
+        rowIndex: 1,
+        a1Range: 'Sheet1!A1:E1',
+        save: jest.fn(),
+        delete: jest.fn(),
+        Game: 'name',
+        'Player Count': '1-4',
+        Owner: 'Me, Myself, & I',
+        Location: "A friend's house",
+        'BGG Link': 'https://boardgamegeek.com/boardgame/1',
+      };
+
+      it('should create a SheetGame from a spreadsheet row', () => {
+        const sheetGame = SheetGame.fromSpreadsheetRow(row);
+        expect(sheetGame).toBeTruthy();
+        expect(sheetGame.name).toEqual('name');
+        expect(sheetGame.playerCount).toEqual('1-4');
+        expect(sheetGame.owner).toEqual('Me, Myself, & I');
+        expect(sheetGame.location).toEqual("A friend's house");
+        expect(sheetGame.bggLink).toEqual(
+          'https://boardgamegeek.com/boardgame/1'
+        );
+      });
+    });
   });
 
   describe('getters', () => {
@@ -85,6 +114,10 @@ describe('SheetGame', () => {
         });
 
         it('returns true', () => {
+          expect(game.like(new GameFilter({ playerCount: '1-3' }))).toBe(true);
+        });
+
+        it('returns true', () => {
           expect(game.like(new GameFilter({ owner: 'myself' }))).toBe(true);
         });
 
@@ -100,6 +133,10 @@ describe('SheetGame', () => {
 
         it('returns false', () => {
           expect(game.like(new GameFilter({ playerCount: '5' }))).toBe(false);
+        });
+
+        it('returns false', () => {
+          expect(game.like(new GameFilter({ playerCount: '5-8' }))).toBe(false);
         });
 
         it('returns false', () => {

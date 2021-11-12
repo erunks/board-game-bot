@@ -7,6 +7,20 @@ describe('BggGame', () => {
     expect(game).toBeTruthy();
   });
 
+  describe('static methods', () => {
+    describe('#gameType', () => {
+      it('should return `Board Game` by default', () => {
+        expect(BggGame.gameType('boardgame')).toBe('Board Game');
+      });
+
+      describe('when the type is an expansion', () => {
+        it('should return the game type as a pretty string', () => {
+          expect(BggGame.gameType('boardgameexpansion')).toEqual('Expansion');
+        });
+      });
+    });
+  });
+
   describe('methods', () => {
     describe('#gameType', () => {
       it('should return `Board Game` by default', () => {
