@@ -1,4 +1,4 @@
-import { GoogleSpreadsheetRow } from 'google-spreadsheet';
+import { createMockGoogleSpreadsheetRow } from '../helpers/googleSpreadsheetMocks';
 import BggGame from '../../src/models/BggGame';
 import GameFilter from '../../src/models/GameFilter';
 import SheetGame from '../../src/models/SheetGame';
@@ -18,27 +18,17 @@ describe('SheetGame', () => {
 
   describe('static methods', () => {
     describe('#fromSpreadsheetRow', () => {
-      const row: GoogleSpreadsheetRow = {
-        rowIndex: 1,
-        a1Range: 'Sheet1!A1:E1',
-        save: jest.fn(),
-        delete: jest.fn(),
-        Game: 'name',
-        'Player Count': '1-4',
-        Owner: 'Me, Myself, & I',
-        Location: "A friend's house",
-        'BGG Link': 'https://boardgamegeek.com/boardgame/1',
-      };
+      const row = createMockGoogleSpreadsheetRow();
 
       it('should create a SheetGame from a spreadsheet row', () => {
         const sheetGame = SheetGame.fromSpreadsheetRow(row);
         expect(sheetGame).toBeTruthy();
-        expect(sheetGame.name).toEqual('name');
+        expect(sheetGame.name).toEqual("Liar's Dice");
         expect(sheetGame.playerCount).toEqual('1-4');
         expect(sheetGame.owner).toEqual('Me, Myself, & I');
         expect(sheetGame.location).toEqual("A friend's house");
         expect(sheetGame.bggLink).toEqual(
-          'https://boardgamegeek.com/boardgame/1'
+          'https://boardgamegeek.com/boardgame/12345'
         );
       });
     });

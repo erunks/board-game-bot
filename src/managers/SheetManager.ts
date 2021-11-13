@@ -9,10 +9,7 @@ import filter from 'lodash/filter';
 import map from 'lodash/map';
 
 export class SheetManager {
-  document: GoogleSpreadsheet;
-
-  construtor(): null {
-    this.document = null;
+  constructor(public document: GoogleSpreadsheet = null) {
     return;
   }
 
@@ -51,7 +48,7 @@ export class SheetManager {
     }
   }
 
-  async getGames(gameFilter: GameFilter): Promise<SheetGame[]> {
+  async getGames(gameFilter?: GameFilter): Promise<SheetGame[]> {
     if (!this.document) {
       return [];
     }
@@ -60,7 +57,7 @@ export class SheetManager {
     const rows: GoogleSpreadsheetRow[] = await sheet.getRows();
     let sheetGames = map(rows, (row) => SheetGame.fromSpreadsheetRow(row));
 
-    if (gameFilter.hasAny()) {
+    if (gameFilter && gameFilter.hasAny()) {
       sheetGames = filter(sheetGames, (game) => game.like(gameFilter));
     }
 
