@@ -10,7 +10,13 @@ export class BggManager {
   private static _parserOptions = {
     attributeNamePrefix: '',
     ignoreAttributes: false,
-    attrValueProcessor: (val) => decode(val, { isAttributeValue: true }),
+    attrValueProcessor: (val, attrName) => {
+      const processedValue = decode(val, { isAttributeValue: true });
+      if (attrName === 'id') {
+        return parseInt(processedValue);
+      }
+      return processedValue;
+    },
     tagValueProcessor: (val) => decode(val),
   };
 
@@ -20,7 +26,7 @@ export class BggManager {
     return get(parse(response.data, this._parserOptions), 'items.item');
   }
 
-  static async getGameInfoById(gameId: string): Promise<IBggGame | null> {
+  static async getGameInfoById(gameId: number): Promise<IBggGame | null> {
     try {
       const response = await axios.get(
         `https://api.geekdo.com/xmlapi2/thing?id=${gameId}&versions=1`
@@ -52,7 +58,7 @@ export class BggManager {
     }
   }
 
-  static async findGameById(gameId: string): Promise<BggGame | null> {
+  static async findGameById(gameId: number): Promise<BggGame | null> {
     const game = await BggManager.getGameInfoById(gameId);
     if (!game) return null;
 
@@ -63,8 +69,8 @@ export class BggManager {
     const gameInfo = await BggManager.getGameInfoById(game.id);
     if (!gameInfo) return null;
 
-    game.minPlayers = get(gameInfo, 'minplayers.value', '');
-    game.maxPlayers = get(gameInfo, 'maxplayers.value', '');
+    game.minPlayers = parseInt(get(gameInfo, 'minplayers.value', 0));
+    game.maxPlayers = parseInt(get(gameInfo, 'maxplayers.value', 0));
     game.thumbnail = get(gameInfo, 'thumbnail', '');
     game.loaded = true;
     return game;
@@ -75,9 +81,9 @@ export class BggManager {
       game.id,
       get(game, 'name.value', ''),
       game.type,
-      get(game, 'yearpublished.value', ''),
-      get(game, 'minplayers.value', ''),
-      get(game, 'maxplayers.value', ''),
+      parseInt(get(game, 'yearpublished.value', 0)),
+      parseInt(get(game, 'minplayers.value', 0)),
+      parseInt(get(game, 'maxplayers.value', 0)),
       get(game, 'thumbnail', ''),
       get(game, 'loaded', false)
     );

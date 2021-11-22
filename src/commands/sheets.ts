@@ -1,6 +1,8 @@
 import {
   ButtonInteraction,
   CommandInteraction,
+  Interaction,
+  InteractionCollector,
   Message,
   MessageActionRow,
   MessageButton,
@@ -15,14 +17,21 @@ import truncate from 'lodash/truncate';
 import BggManager from '../managers/BggManager';
 import SheetManager from '../managers/SheetManager';
 import BggGame from '../models/BggGame';
+import GameFilter from '../models/GameFilter';
+import SheetGame from '../models/SheetGame';
 
 @Discord()
 export abstract class Sheets {
-  private static _interactionGames: Map<CommandInteraction, BggGame[]> =
-    new Map();
+  private static _interactionGames: Map<
+    CommandInteraction,
+    BggGame[] | SheetGame[]
+  > = new Map();
   private static _interactionIndex: Map<CommandInteraction, number> = new Map();
 
-  static get interactionGames(): Map<CommandInteraction, BggGame[]> {
+  static get interactionGames(): Map<
+    CommandInteraction,
+    BggGame[] | SheetGame[]
+  > {
     return this._interactionGames;
   }
 
@@ -80,7 +89,7 @@ export abstract class Sheets {
     await interaction.deferReply();
 
     const results = await BggManager.findGame(game);
-    let gamesList;
+    let gamesList: BggGame[];
 
     if (results.length === 0) {
       await interaction.followUp(
@@ -96,20 +105,13 @@ export abstract class Sheets {
       ];
     }
 
-    Sheets._interactionGames.set(interaction, gamesList);
-    Sheets._interactionIndex.set(interaction, 0);
+    this.setSheetInteractionGames(gamesList, interaction);
 
-    const message = await interaction.followUp({
-      embeds: [this.getGameEmbed(interaction, gamesList.length)],
-      fetchReply: true,
-      components: [this.getActionRow(interaction)],
-    });
-
-    if (!(message instanceof Message)) {
-      throw Error('InvalidMessage instance');
-    }
-
-    const collector = message.createMessageComponentCollector();
+    const { collector } = await this.createGameInteraction(
+      interaction,
+      gamesList,
+      [this.getActionRow(interaction)]
+    );
 
     collector.on('collect', async (collectInteraction: ButtonInteraction) => {
       await collectInteraction.deferUpdate();
@@ -121,18 +123,14 @@ export abstract class Sheets {
         return null;
       }
 
-      const currentIndex = this.getCurrentIndex(interaction);
       const buttonId = collectInteraction.customId;
 
       switch (buttonId) {
         case 'previous-game':
-          Sheets._interactionIndex.set(interaction, max([0, currentIndex - 1]));
+          this.decrementSheetInteractionIndex(interaction);
           break;
         case 'next-game':
-          Sheets._interactionIndex.set(
-            interaction,
-            min([gamesList.length - 1, currentIndex + 1])
-          );
+          this.incrementSheetInteractionIndex(interaction);
           const nextGame = this.getCurrentGame(interaction);
           if (!nextGame.loaded) await BggManager.fillOutDetails(nextGame);
           break;
@@ -148,11 +146,75 @@ export abstract class Sheets {
       return null;
     });
 
-    collector.on('end', async () => {
-      if (!message.editable || message.deleted) return;
+    return null;
+  }
 
-      await message.edit({ components: [] });
+  @Slash('viewgames', {
+    description:
+      'Lists all games in the sheet, with optional filtering by field.',
+  })
+  async getGames(
+    @SlashOption('name', { required: false, description: 'Filters' })
+    name: string,
+    @SlashOption('playercount', {
+      required: false,
+      description:
+        'Filter can be a range (e.g. 1-4) or a single number (e.g. 5)',
+    })
+    playerCount: string,
+    @SlashOption('location', { required: false }) location: string,
+    @SlashOption('owner', { required: false }) owner: string,
+    interaction: CommandInteraction
+  ): Promise<void> {
+    await interaction.deferReply();
+    const sheetManager = new SheetManager();
+    await sheetManager.connect();
+    const games: SheetGame[] = await sheetManager.getGames(
+      new GameFilter({ name, playerCount, location, owner })
+    );
+
+    this.setSheetInteractionGames(games, interaction);
+
+    const { collector } = await this.createGameInteraction(interaction, games, [
+      new MessageActionRow().addComponents(
+        this.getPreviousButton(interaction),
+        this.getNextButton(interaction)
+      ),
+    ]);
+
+    collector.on('collect', async (collectInteraction: ButtonInteraction) => {
+      await collectInteraction.deferUpdate();
+
+      if (interaction.user.id !== collectInteraction.user.id) {
+        await interaction.followUp(
+          `${collectInteraction.member}, since you did not initiate this command, you cannot use it.`
+        );
+        return null;
+      }
+
+      const buttonId = collectInteraction.customId;
+
+      switch (buttonId) {
+        case 'previous-game':
+          this.decrementSheetInteractionIndex(interaction);
+          break;
+        case 'next-game':
+          this.incrementSheetInteractionIndex(interaction);
+          break;
+      }
+
+      await collectInteraction.editReply({
+        embeds: [this.getGameEmbed(interaction, games.length)],
+        components: [
+          new MessageActionRow().addComponents(
+            this.getPreviousButton(interaction),
+            this.getNextButton(interaction)
+          ),
+        ],
+      });
+      return null;
     });
+
     return null;
   }
 
@@ -174,7 +236,30 @@ export abstract class Sheets {
     await interaction.followUp(response);
   }
 
-  private getCurrentGame(interaction: CommandInteraction): BggGame {
+  private async createGameInteraction(
+    interaction: CommandInteraction,
+    list: BggGame[] | SheetGame[],
+    components: MessageActionRow[]
+  ): Promise<{
+    message: Message;
+    collector: InteractionCollector<Interaction>;
+  }> {
+    const message = await interaction.followUp({
+      embeds: [this.getGameEmbed(interaction, list.length)],
+      fetchReply: true,
+      components: components,
+    });
+
+    if (!(message instanceof Message)) {
+      throw Error('InvalidMessage instance');
+    }
+
+    const collector = message.createMessageComponentCollector();
+
+    return { message, collector };
+  }
+
+  private getCurrentGame(interaction: CommandInteraction): BggGame | SheetGame {
     const currentIndex = Sheets._interactionIndex.get(interaction);
     const gamesList = Sheets._interactionGames.get(interaction);
     return gamesList[currentIndex];
@@ -238,11 +323,38 @@ export abstract class Sheets {
       .addField('Game Type', game.gameType(), true)
       .addField('Players', game.players(), true);
 
-    if (game.yearPublished)
-      embed.addField('Year Published', game.yearPublished, false);
+    game.yearPublished &&
+      embed.addField('Year Published', game.yearPublished.toString(), false);
+    game.link() && embed.addField('BGG Link', game.link(), false);
 
-    embed.addField('BGG Link', game.link(), false);
     return embed;
+  }
+
+  private decrementSheetInteractionIndex(
+    interaction: CommandInteraction
+  ): void {
+    const currentIndex = this.getCurrentIndex(interaction);
+    Sheets._interactionIndex.set(interaction, max([0, currentIndex - 1]));
+  }
+
+  private incrementSheetInteractionIndex(
+    interaction: CommandInteraction
+  ): void {
+    const currentIndex = this.getCurrentIndex(interaction);
+    const list = Sheets._interactionGames.get(interaction);
+
+    Sheets._interactionIndex.set(
+      interaction,
+      min([list.length - 1, currentIndex + 1])
+    );
+  }
+
+  private setSheetInteractionGames(
+    list: BggGame[] | SheetGame[],
+    interaction: CommandInteraction
+  ) {
+    Sheets._interactionGames.set(interaction, list);
+    Sheets._interactionIndex.set(interaction, 0);
   }
 }
 

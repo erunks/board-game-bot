@@ -1,13 +1,15 @@
 import {
   GoogleSpreadsheet,
+  GoogleSpreadsheetRow,
   GoogleSpreadsheetWorksheet,
 } from 'google-spreadsheet';
+import GameFilter from '../models/GameFilter';
+import SheetGame from '../models/SheetGame';
+import filter from 'lodash/filter';
+import map from 'lodash/map';
 
 export class SheetManager {
-  document: GoogleSpreadsheet;
-
-  construtor(): null {
-    this.document = null;
+  constructor(public document: GoogleSpreadsheet = null) {
     return;
   }
 
@@ -44,6 +46,22 @@ export class SheetManager {
       console.error(err);
       return `Failed to add ${gameInfo[0]}`;
     }
+  }
+
+  async getGames(gameFilter?: GameFilter): Promise<SheetGame[]> {
+    if (!this.document) {
+      return [];
+    }
+
+    const sheet = this.getSheet();
+    const rows: GoogleSpreadsheetRow[] = await sheet.getRows();
+    let sheetGames = map(rows, (row) => SheetGame.fromSpreadsheetRow(row));
+
+    if (gameFilter && gameFilter.hasAny()) {
+      sheetGames = filter(sheetGames, (game) => game.like(gameFilter));
+    }
+
+    return sheetGames;
   }
 
   getSheet(index = 0): GoogleSpreadsheetWorksheet | null {

@@ -1,113 +1,113 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`BggManager #getGameInfoById when the request succeeds returns the json data 1`] = `
+exports[`BggManager methods #getGameInfoById when the request succeeds returns the json data 1`] = `
 Object {
   "description": "Secret Hitler is a dramatic game of political intrigue and betrayal set in 1930s Germany. Each player is randomly and secretly assigned to be a liberal or a fascist, and one player is Secret Hitler. The fascists coordinate to sow distrust and install their cold-blooded leader; the liberals must find and stop the Secret Hitler before it's too late. The liberal team always has a majority.&#10;&#10;At the beginning of the game, players close their eyes, and the fascists reveal themselves to one another. Secret Hitler keeps his eyes closed, but puts his thumb up so the fascists can see who he is. The fascists learn who Hitler is, but Hitler doesn't know who his fellow fascists are, and the liberals don't know who anyone is.&#10;&#10;Each round, players elect a President and a Chancellor who will work together to enact a law from a random deck. If the government passes a fascist law, players must try to figure out if they were betrayed or simply unlucky. Secret Hitler also features government powers that come into play as fascism advances. The fascists will use those powers to create chaos unless liberals can pull the nation back from the brink of war.&#10;&#10;The objective of the liberal team is to pass five liberal policies or assassinate Secret Hitler. The objective of the fascist team is to pass six fascist policies or elect Secret Hitler chancellor after three fascist policies have passed.&#10;&#10;",
-  "id": "188834",
+  "id": 188834,
   "image": "https://cf.geekdo-images.com/rAQ3hIXoH6xDcj41v9iqCg__original/img/7oKwNUYakx3-vHUBLHWVuFNKfl4=/0x0/filters:format(jpeg)/pic5164305.jpg",
   "link": Array [
     Object {
-      "id": "1023",
+      "id": 1023,
       "type": "boardgamecategory",
       "value": "Bluffing",
     },
     Object {
-      "id": "1002",
+      "id": 1002,
       "type": "boardgamecategory",
       "value": "Card Game",
     },
     Object {
-      "id": "1039",
+      "id": 1039,
       "type": "boardgamecategory",
       "value": "Deduction",
     },
     Object {
-      "id": "1079",
+      "id": 1079,
       "type": "boardgamecategory",
       "value": "Humor",
     },
     Object {
-      "id": "1030",
+      "id": 1030,
       "type": "boardgamecategory",
       "value": "Party Game",
     },
     Object {
-      "id": "1001",
+      "id": 1001,
       "type": "boardgamecategory",
       "value": "Political",
     },
     Object {
-      "id": "1120",
+      "id": 1120,
       "type": "boardgamecategory",
       "value": "Print & Play",
     },
     Object {
-      "id": "2891",
+      "id": 2891,
       "type": "boardgamemechanic",
       "value": "Hidden Roles",
     },
     Object {
-      "id": "2685",
+      "id": 2685,
       "type": "boardgamemechanic",
       "value": "Player Elimination",
     },
     Object {
-      "id": "2019",
+      "id": 2019,
       "type": "boardgamemechanic",
       "value": "Team-Based Game",
     },
     Object {
-      "id": "2814",
+      "id": 2814,
       "type": "boardgamemechanic",
       "value": "Traitor Game",
     },
     Object {
-      "id": "2017",
+      "id": 2017,
       "type": "boardgamemechanic",
       "value": "Voting",
     },
     Object {
-      "id": "8374",
+      "id": 8374,
       "type": "boardgamefamily",
       "value": "Crowdfunding: Kickstarter",
     },
     Object {
-      "id": "70948",
+      "id": 70948,
       "type": "boardgamefamily",
       "value": "Digital Implementations: Tabletopia",
     },
     Object {
-      "id": "2989",
+      "id": 2989,
       "type": "boardgamefamily",
       "value": "Game: Werewolf / Mafia",
     },
     Object {
-      "id": "87375",
+      "id": 87375,
       "type": "boardgamedesigner",
       "value": "Mike Boxleiter",
     },
     Object {
-      "id": "87376",
+      "id": 87376,
       "type": "boardgamedesigner",
       "value": "Tommy Maranges",
     },
     Object {
-      "id": "75735",
+      "id": 75735,
       "type": "boardgameartist",
       "value": "Mackenzie Schubert",
     },
     Object {
-      "id": "34112",
+      "id": 34112,
       "type": "boardgamepublisher",
       "value": "Goat Wolf & Cabbage",
     },
     Object {
-      "id": "4",
+      "id": 4,
       "type": "boardgamepublisher",
       "value": "(Self-Published)",
     },
     Object {
-      "id": "14966",
+      "id": 14966,
       "type": "boardgamepublisher",
       "value": "Print & Play Productions",
     },
@@ -430,30 +430,30 @@ Object {
         "depth": Object {
           "value": "2.125",
         },
-        "id": "292643",
+        "id": 292643,
         "image": "https://cf.geekdo-images.com/Kbs6vVX1HNPGd7PEq1SEYw__original/img/wCoXaLIA_OVhuC01PNcrqw2KOU8=/0x0/filters:format(png)/pic2771488.png",
         "length": Object {
           "value": "15",
         },
         "link": Array [
           Object {
-            "id": "188834",
+            "id": 188834,
             "inbound": "true",
             "type": "boardgameversion",
             "value": "Secret Hitler",
           },
           Object {
-            "id": "34112",
+            "id": 34112,
             "type": "boardgamepublisher",
             "value": "Goat Wolf & Cabbage",
           },
           Object {
-            "id": "75735",
+            "id": 75735,
             "type": "boardgameartist",
             "value": "Mackenzie Schubert",
           },
           Object {
-            "id": "2184",
+            "id": 2184,
             "type": "language",
             "value": "English",
           },
@@ -482,30 +482,30 @@ Object {
         "depth": Object {
           "value": "1.9685",
         },
-        "id": "363714",
+        "id": 363714,
         "image": "https://cf.geekdo-images.com/DHPsGchaEUIgmvE70ARnsQ__original/img/PQ_MN7-XoObUDax_1W6Nc36cm5A=/0x0/filters:format(jpeg)/pic5164299.jpg",
         "length": Object {
           "value": "14.9606",
         },
         "link": Array [
           Object {
-            "id": "188834",
+            "id": 188834,
             "inbound": "true",
             "type": "boardgameversion",
             "value": "Secret Hitler",
           },
           Object {
-            "id": "34112",
+            "id": 34112,
             "type": "boardgamepublisher",
             "value": "Goat Wolf & Cabbage",
           },
           Object {
-            "id": "75735",
+            "id": 75735,
             "type": "boardgameartist",
             "value": "Mackenzie Schubert",
           },
           Object {
-            "id": "2184",
+            "id": 2184,
             "type": "language",
             "value": "English",
           },
@@ -534,25 +534,25 @@ Object {
         "depth": Object {
           "value": "0",
         },
-        "id": "377298",
+        "id": 377298,
         "image": "https://cf.geekdo-images.com/Kbs6vVX1HNPGd7PEq1SEYw__original/img/wCoXaLIA_OVhuC01PNcrqw2KOU8=/0x0/filters:format(png)/pic2771488.png",
         "length": Object {
           "value": "0",
         },
         "link": Array [
           Object {
-            "id": "188834",
+            "id": 188834,
             "inbound": "true",
             "type": "boardgameversion",
             "value": "Secret Hitler",
           },
           Object {
-            "id": "14966",
+            "id": 14966,
             "type": "boardgamepublisher",
             "value": "Print & Play Productions",
           },
           Object {
-            "id": "2199",
+            "id": 2199,
             "type": "language",
             "value": "Polish",
           },
@@ -581,35 +581,35 @@ Object {
         "depth": Object {
           "value": "0",
         },
-        "id": "301129",
+        "id": 301129,
         "image": "https://cf.geekdo-images.com/Kbs6vVX1HNPGd7PEq1SEYw__original/img/wCoXaLIA_OVhuC01PNcrqw2KOU8=/0x0/filters:format(png)/pic2771488.png",
         "length": Object {
           "value": "0",
         },
         "link": Array [
           Object {
-            "id": "188834",
+            "id": 188834,
             "inbound": "true",
             "type": "boardgameversion",
             "value": "Secret Hitler",
           },
           Object {
-            "id": "4",
+            "id": 4,
             "type": "boardgamepublisher",
             "value": "(Self-Published)",
           },
           Object {
-            "id": "34112",
+            "id": 34112,
             "type": "boardgamepublisher",
             "value": "Goat Wolf & Cabbage",
           },
           Object {
-            "id": "30025",
+            "id": 30025,
             "type": "boardgamepublisher",
             "value": "Rattlebox Games",
           },
           Object {
-            "id": "2184",
+            "id": 2184,
             "type": "language",
             "value": "English",
           },

@@ -1,22 +1,31 @@
 export interface IBggGame {
-  id: string;
+  id: number;
   name: string;
   type: string;
-  yearPublished: string;
-  minPlayers: string;
-  maxPlayers: string;
+  yearPublished: number;
+  minPlayers: number;
+  maxPlayers: number;
   thumbnail: string;
   loaded: boolean;
 }
 
 export class BggGame implements IBggGame {
+  public static gameType(type: string): string {
+    switch (type) {
+      case 'boardgameexpansion':
+        return 'Expansion';
+      default:
+        return 'Board Game';
+    }
+  }
+
   constructor(
-    public id: string,
+    public id: number,
     public name: string,
     public type: string,
-    public yearPublished: string,
-    public minPlayers: string,
-    public maxPlayers: string,
+    public yearPublished: number,
+    public minPlayers: number,
+    public maxPlayers: number,
     public thumbnail: string,
     public loaded: boolean = false
   ) {
@@ -24,12 +33,7 @@ export class BggGame implements IBggGame {
   }
 
   gameType(): string {
-    switch (this.type) {
-      case 'boardgameexpansion':
-        return 'Expansion';
-      default:
-        return 'Board Game';
-    }
+    return BggGame.gameType(this.type);
   }
 
   link(): string {
@@ -38,7 +42,7 @@ export class BggGame implements IBggGame {
 
   players(): string {
     if (this.minPlayers === this.maxPlayers) {
-      return this.minPlayers;
+      return this.minPlayers.toString();
     } else {
       return `${this.minPlayers}-${this.maxPlayers}`;
     }
